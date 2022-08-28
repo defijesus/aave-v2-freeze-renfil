@@ -25,4 +25,4 @@ submit :;  forge script script/FeiRiskParamsUpdateSubmission.s.sol:FeiRiskParams
 
 
 # verify
-verify :; forge verify-contract --compiler-version 0.8.11+commit.d7f03943 --optimizer-runs 200 0x453d4c07caD08e7A65624d1EDd755c96C440a8d2 ./src/1InchListingPayload.sol:OneInchListingPayload --
+verify :; forge verify-contract --compiler-version 0.8.11+commit.d7f03943 --optimizer-runs 200 0x6539eD4E0db483C128ae15546FA6d715bE00f1a0 ./src/FeiRiskParamsUpdate.sol:FeiRiskParamsUpdate
