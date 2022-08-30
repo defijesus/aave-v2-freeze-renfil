@@ -7,11 +7,10 @@ import "forge-std/Script.sol";
 import {AaveGovHelpers, IAaveGov} from "src/test/utils/AaveGovHelpers.sol";
 
 contract FeiRiskParamsUpdateSubmitScript is Script, Test {
-    // TODO these constants will change
-    address internal constant DELEGATE_ADDRESS = 0xd2362DbB5Aa708Bc454Ce5C3F11050C016764fA6;
-    address internal constant PAYLOAD = 0xD417d07c20e31F6e129fa68182054B641FbEC8Bd;
 
-    bytes32 internal constant IPFS_HASH = bytes32(0x0807c1081243b87ff499e9af640afab121f24a693b289c11ea301cad1fd51ccf);
+    address internal constant PAYLOAD = 0xB8FE2A2104AFB975240d3D32A7823A01Cb74639F;
+
+    bytes32 internal constant IPFS_HASH = bytes32(0x86fb2c1c7056f55ddfebe82b634419b2170c5cb5b981df6a0d19523dba959575);
 
     IAaveGov internal constant GOV =
         IAaveGov(0xEC568fffba86c094cf06b22134B23074DFE2252c);
