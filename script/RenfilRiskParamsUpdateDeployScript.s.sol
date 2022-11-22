@@ -2,15 +2,15 @@
 pragma solidity ^0.8.11;
 
 import "forge-std/Script.sol";
-import "src/FeiRiskParamsUpdate.sol";
+import "src/RenFilRiskParamsUpdate.sol";
 
 
-contract FeiRiskParamsUpdateDeployScript is Script {
+contract RenfilRiskParamsUpdateDeployScript is Script {
 
     function run() external {
         vm.startBroadcast();
 
-        FeiRiskParamsUpdate fei = new FeiRiskParamsUpdate();
+        RenFilRiskParamsUpdate payload = new RenFilRiskParamsUpdate();
 
         vm.stopBroadcast();
     }

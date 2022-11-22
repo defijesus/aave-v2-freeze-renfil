@@ -6,7 +6,7 @@ import "forge-std/Script.sol";
 
 import {AaveGovHelpers, IAaveGov} from "src/test/utils/AaveGovHelpers.sol";
 
-contract FeiRiskParamsUpdateSubmitScript is Script, Test {
+contract RenfilRiskParamsUpdateSubmitScript is Script, Test {
 
     address internal constant PAYLOAD = 0xB8FE2A2104AFB975240d3D32A7823A01Cb74639F;
 

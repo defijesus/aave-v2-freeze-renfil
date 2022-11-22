@@ -6,7 +6,7 @@ import "forge-std/console.sol";
 import {AaveV2Helpers, ReserveConfig} from "./utils/AaveV2Helpers.sol";
 import {AaveGovHelpers, IAaveGov} from "./utils/AaveGovHelpers.sol";
 
-import {FeiRiskParamsUpdate} from "../FeiRiskParamsUpdate.sol";
+import {RenFilRiskParamsUpdate} from "../RenFilRiskParamsUpdate.sol";
 
 interface IERC20 {
     function balanceOf(address account) external view returns (uint256);
@@ -51,15 +51,15 @@ interface ILendingPool {
     ) external;
 }
 
-contract ValidationFeiRiskParamUpdate is Test {
+contract ValidationRenfilRiskParamUpdate is Test {
     address internal constant AAVE_WHALE =
         0x25F2226B597E8F9514B3F68F00f494cF4f286491;
 
-    address internal constant FEI = 0x956F47F50A910163D8BF957Cf5846D573E7f87CA;
+    address internal constant RENFIL = 0xD5147bc8e386d91Cc5DBE72099DAC6C9b99276F5;
 
-    address public constant A_FEI = 0x683923dB55Fead99A79Fa01A27EeC3cB19679cC3;
+    address public constant A_RENFIL = 0x514cd6756CCBe28772d4Cb81bC3156BA9d1744aa;
 
-    address public constant A_FEI_WHALE = 0x4fb2e1E718EC713aa7346687FCE8e4411b7F423e;
+    address public constant A_RENFIL_WHALE = 0x0fCCef1C29dEDdB1E2A007Ee9C1EDf63149aA6b3;
 
     ILendingPool public constant AAVE_LENDING_POOL = ILendingPool(0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9);
 
@@ -71,8 +71,8 @@ contract ValidationFeiRiskParamUpdate is Test {
     /// @dev Uses an already deployed payload on the target network
     function testProposalPostPayload() public {
         /// deploy payload
-        FeiRiskParamsUpdate fei = new FeiRiskParamsUpdate();
-        _testProposal(address(fei));
+        RenFilRiskParamsUpdate payload = new RenFilRiskParamsUpdate();
+        _testProposal(address(payload));
     }
 
     function _testProposal(address payload) internal {
@@ -109,20 +109,20 @@ contract ValidationFeiRiskParamUpdate is Test {
         ReserveConfig[] memory allConfigsAfter = AaveV2Helpers
             ._getReservesConfigs(false, MARKET_NAME);
 
-        ReserveConfig memory feiConfigBefore = AaveV2Helpers._findReserveConfig(allConfigsBefore, "FEI", true);
-        ReserveConfig memory feiConfigAfter = AaveV2Helpers._findReserveConfig(allConfigsAfter, "FEI", true);
+        ReserveConfig memory reserveConfigBefore = AaveV2Helpers._findReserveConfig(allConfigsBefore, "renFIL", true);
+        ReserveConfig memory reserveConfigAfter = AaveV2Helpers._findReserveConfig(allConfigsAfter, "renFIL", true);
 
-        assertEq(feiConfigBefore.isFrozen, false);
-        assertEq(feiConfigAfter.isFrozen, true);
-        assertEq(feiConfigAfter.reserveFactor, 10_000);
+        assertEq(reserveConfigBefore.isFrozen, false);
+        assertEq(reserveConfigAfter.isFrozen, true);
+        assertEq(reserveConfigAfter.reserveFactor, 10_000);
 
         // checking if it's still possible to withdrwaw from the market
-        vm.startPrank(A_FEI_WHALE);
-        uint256 aFeiBalance = IERC20(A_FEI).balanceOf(A_FEI_WHALE);
-        uint256 balanceBefore = IERC20(FEI).balanceOf(A_FEI_WHALE);
-        AAVE_LENDING_POOL.withdraw(FEI, aFeiBalance , A_FEI_WHALE);
-        uint256 balanceAfter = IERC20(FEI).balanceOf(A_FEI_WHALE);
+        vm.startPrank(A_RENFIL_WHALE);
+        uint256 aBalance = IERC20(A_RENFIL).balanceOf(A_RENFIL_WHALE);
+        uint256 balanceBefore = IERC20(RENFIL).balanceOf(A_RENFIL_WHALE);
+        AAVE_LENDING_POOL.withdraw(RENFIL, aBalance , A_RENFIL_WHALE);
+        uint256 balanceAfter = IERC20(RENFIL).balanceOf(A_RENFIL_WHALE);
         vm.stopPrank();
-        assertEq(balanceAfter == balanceBefore + aFeiBalance , true);
+        assertEq(balanceAfter == balanceBefore + aBalance , true);
     }
 }

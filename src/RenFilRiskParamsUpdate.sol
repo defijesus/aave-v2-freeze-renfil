@@ -33,17 +33,18 @@ interface ILendingPoolConfigurator {
         uint256 reserveFactor
     ) external;
 }
-
-// This payload freezes the FEI aave v2 market and sets the reserve factor to 100%
-// in preparation for Tribe DAO wind down.
-// https://governance.aave.com/t/arc-risk-parameter-updates-for-ethereum-aave-v2-market/9393
+// TODO Snapshot link
+// This payload freezes the renFIL aave v2 market and sets the reserve factor to 100%
+// in preparation for Ren 1.0 Network wind down.
+// https://governance.aave.com/t/arc-freeze-renfil-for-aave-v2-eth-market/10727
 // https://snapshot.org/#/aave.eth/proposal/0x19df23070be999efbb7caf6cd35c320eb74dd119bcb15d003dc2e82c2bbd0d94
-contract FeiRiskParamsUpdate is IProposalGenericExecutor {
-    address public constant FEI = 0x956F47F50A910163D8BF957Cf5846D573E7f87CA;
+contract RenFilRiskParamsUpdate is IProposalGenericExecutor {
+    address public constant RENFIL = 0xD5147bc8e386d91Cc5DBE72099DAC6C9b99276F5;
     address public constant LENDING_POOL_CONFIGURATOR = 0x311Bb771e4F8952E6Da169b425E7e92d6Ac45756;
 
     function execute() external override {
-        ILendingPoolConfigurator(LENDING_POOL_CONFIGURATOR).freezeReserve(FEI);
-        ILendingPoolConfigurator(LENDING_POOL_CONFIGURATOR).setReserveFactor(FEI, 10_000);
+        ILendingPoolConfigurator(LENDING_POOL_CONFIGURATOR).freezeReserve(RENFIL);
+        // TODO is this also necessary?
+        ILendingPoolConfigurator(LENDING_POOL_CONFIGURATOR).setReserveFactor(RENFIL, 10_000);
     }
 }
