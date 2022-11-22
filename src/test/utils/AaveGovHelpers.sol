@@ -125,7 +125,8 @@ library AaveGovHelpers {
     ) internal {
         vm.deal(aaveWhale, 1 ether);
         vm.startPrank(aaveWhale);
-        vm.roll(block.number + 1);
+        uint256 startBlock = GOV.getProposalById(proposalId).startBlock;
+        vm.roll(startBlock + 1);
         GOV.submitVote(proposalId, true);
         uint256 endBlock = GOV.getProposalById(proposalId).endBlock;
         vm.roll(endBlock + 1);
