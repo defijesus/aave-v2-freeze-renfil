@@ -116,7 +116,7 @@ contract ValidationRenfilRiskParamUpdate is Test {
         assertEq(reserveConfigAfter.isFrozen, true);
         assertEq(reserveConfigAfter.reserveFactor, 10_000);
 
-        // checking if it's still possible to withdrwaw from the market
+        // checking if it's still possible to withdraw from the market
         vm.startPrank(A_RENFIL_WHALE);
         uint256 aBalance = IERC20(A_RENFIL).balanceOf(A_RENFIL_WHALE);
         uint256 balanceBefore = IERC20(RENFIL).balanceOf(A_RENFIL_WHALE);
